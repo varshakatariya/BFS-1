@@ -1,0 +1,58 @@
+/*
+  Time Complexity: O(N)
+  Space Complexity: O(N)
+  Level order traversal is Breadth first traversal in Binary Tree or graph.
+  Algorithm: 
+  1. I am using iterative algoprithm for BFS. 
+  2. Taking temporary storage as a queue (FIFO)
+  3. I will start will root and add root to queue.
+  4. iterate until q is not empty.
+  5. Inside iteration, take the size of queue which will be total size of nodes at current level, also declare new arraylist.
+    a. then apply a for loop to iterate till the size of all nodes. 
+    b. while iterating through for loop, remove peek element from queue and check for its children available.
+    c. if left and right children are available then add then to queue which will be at end of the queue.
+    d. before ending for loop, add removed element from q to a temporary arraylist created inside queue. 
+    e. This arraylist will hold elements for current level.
+  6. before ending while loop add temporary arraylist to the final result list.
+*/
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        if(root == null)
+            return new ArrayList();
+        List<List<Integer>> res = new ArrayList<>();
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()){
+            int sz = q.size();
+            List<Integer> list = new ArrayList<>();
+            for(int i=0; i<sz; i++){
+                TreeNode t = q.poll();
+                if(t.left!=null){
+                    q.offer(t.left);
+                }
+                if(t.right!=null){
+                    q.offer(t.right);
+                }
+                list.add(t.val);
+            }
+            res.add(list);
+        }
+        return res;
+    }
+}
